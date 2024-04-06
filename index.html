@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <h1>Hello</h1>
+  <div id="testSSE"></div>
+  <script>
+    const eventSource = new EventSource("http://localhost:8080/lab-1.0-SNAPSHOT/events");
+    const out = document.getElementById("testSSE");
+
+    eventSource.addEventListener("message", function(event) {
+      out.append("\nReceived event: " + event.data + "\n");
+      out.append(document.createElement("br"));
+      console.log("Received event: " + event.data);
+    });
+
+    eventSource.onerror = e => {
+      eventSource.close();
+      out.append("Closed");      
+      out.append(document.createElement("br"));      
+    }
+  </script>
+</body>
+</html>
