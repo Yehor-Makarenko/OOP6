@@ -17,18 +17,19 @@ import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import server.db.classes.Client;
 
-@RequiredArgsConstructor
-public class DBClientController {
-  @Getter 
-  @NonNull private Client client;
-  private DBController dbController = DBController.getInstance();  
+public class DBClientController {  
+  private static DBController dbController = DBController.getInstance();  
 
-  public void addClient() {
-    String hashedPassword = BCrypt.hashpw(client.getPassword(), BCrypt.gensalt());
+  private DBClientController() {
+
+  }
+
+  public static void addClient(String name, String email, String password) {
+    String hashedPassword = BCrypt.hashpw(password, BCrypt.gensalt());
     try {
-      PreparedStatement stmt = this.dbController.getConnection().prepareStatement("INSERT INTO clients (name, email, password) VALUES (?, ?, ?)");
-      stmt.setString(1, this.client.getName());
-      stmt.setString(2, this.client.getEmail());
+      PreparedStatement stmt = dbController.getConnection().prepareStatement("INSERT INTO clients (name, email, password) VALUES (?, ?, ?)");
+      stmt.setString(1, name);
+      stmt.setString(2, email);
       stmt.setString(3, hashedPassword);
       stmt.executeUpdate();
     } catch (SQLException e) {
@@ -37,11 +38,11 @@ public class DBClientController {
     }
   }
 
-  public boolean hasClientWithEmail() {
+  public static boolean hasClientWithEmail(String email) {
     int count = 0;
     try {
-      PreparedStatement stmt = this.dbController.getConnection().prepareStatement("SELECT COUNT(*) FROM clients WHERE email = ?");
-      stmt.setString(1, this.client.getEmail());
+      PreparedStatement stmt = dbController.getConnection().prepareStatement("SELECT COUNT(*) FROM clients WHERE email = ?");
+      stmt.setString(1, email);
       ResultSet res = stmt.executeQuery();   
       res.next();   
       count = res.getInt(1);      
@@ -53,17 +54,17 @@ public class DBClientController {
     return count > 0;
   }
 
-  public boolean checkPassword() {
+  public static boolean checkPassword(String email, String password) {
     boolean isPasswordMatch = false;
     PreparedStatement stmt;
     try {
-      stmt = this.dbController.getConnection().prepareStatement("SELECT * FROM clients WHERE email = ?");
-      stmt.setString(1, client.getEmail()); 
+      stmt = dbController.getConnection().prepareStatement("SELECT * FROM clients WHERE email = ?");
+      stmt.setString(1, email); 
       ResultSet res = stmt.executeQuery();   
       res.next();
       String hashedPassword = res.getString("password");      
 
-      isPasswordMatch = BCrypt.checkpw(this.client.getPassword(), hashedPassword);
+      isPasswordMatch = BCrypt.checkpw(password, hashedPassword);
     } catch (SQLException e) {      
       e.printStackTrace();
     }

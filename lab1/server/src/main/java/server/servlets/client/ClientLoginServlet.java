@@ -17,16 +17,15 @@ import server.db.classes.Client;
 public class ClientLoginServlet extends HttpServlet {
   @Override
   protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-    Client client = new Client(req);
-    DBClientController clientDB = new DBClientController(client);
+    Client client = new Client(req);    
 
-    if (!clientDB.hasClientWithEmail()) {
+    if (!DBClientController.hasClientWithEmail(client.getEmail())) {
       resp.setStatus(HttpServletResponse.SC_CONFLICT);
       resp.setContentType("application/json");
       resp.getWriter().write("{\"error\": \"No user with such email\"}");
       resp.getWriter().close();
       return;
-    } else if (!clientDB.checkPassword()) {
+    } else if (!DBClientController.checkPassword(client.getEmail(), client.getPassword())) {
       resp.setStatus(HttpServletResponse.SC_CONFLICT);
       resp.setContentType("application/json");
       resp.getWriter().write("{\"error\": \"Wrong password\"}");

@@ -18,10 +18,9 @@ import server.db.classes.Client;
 public class ClientRegistrationServlet extends HttpServlet {
   @Override  
   protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-    Client client = new Client(req);
-    DBClientController clientDB = new DBClientController(client);
+    Client client = new Client(req);    
     
-    if (clientDB.hasClientWithEmail()) {
+    if (DBClientController.hasClientWithEmail(client.getEmail())) {
       resp.setStatus(HttpServletResponse.SC_CONFLICT);
       resp.setContentType("application/json");
       resp.getWriter().write("{\"error\": \"User already exists\"}");
@@ -29,7 +28,7 @@ public class ClientRegistrationServlet extends HttpServlet {
       return;
     }
 
-    clientDB.addClient();
+    DBClientController.addClient(client.getName(), client.getEmail(), client.getPassword());
     String token = JWTService.generateJWT(client);
     // try {
     //   JWTService.verifyToken("dfgsdgfd"); 
