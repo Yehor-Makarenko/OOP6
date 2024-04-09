@@ -21,12 +21,13 @@ public class DBController {
     return instance;
   }
 
-  private void connect() {
+  private void connect() {    
     String url = "jdbc:postgresql://localhost:5432/payments";
     Properties props = new Properties();
     props.setProperty("user", "postgres");
     props.setProperty("password", "admin");    
     try {
+      Class.forName("org.postgresql.Driver");
       this.connection = DriverManager.getConnection(url, props);
       // Statement stmt = conn.createStatement();
       // ResultSet result = stmt.executeQuery("SELECT * FROM users WHERE id<3");
@@ -34,7 +35,7 @@ public class DBController {
       //   String value = result.getString("name");
       //   System.out.println(value);
       // }
-    } catch (SQLException e) {      
+    } catch (SQLException | ClassNotFoundException e) {      
       e.printStackTrace();
     }
   }

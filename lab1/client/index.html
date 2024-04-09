@@ -60,6 +60,9 @@
       if (response.ok) {
       const data = await response.text();
       console.log(data);
+      } else {
+        const message = (await response.json()).error;
+        alert(message);
       }
     }    
   </script>

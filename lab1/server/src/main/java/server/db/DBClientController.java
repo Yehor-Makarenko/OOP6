@@ -18,7 +18,7 @@ import lombok.RequiredArgsConstructor;
 import server.db.classes.Client;
 
 @RequiredArgsConstructor
-public class ClientController {
+public class DBClientController {
   @Getter 
   @NonNull private Client client;
   private DBController dbController = DBController.getInstance();  
@@ -26,7 +26,7 @@ public class ClientController {
   public void addClient() {
     String hashedPassword = BCrypt.hashpw(client.getPassword(), BCrypt.gensalt());
     try {
-      PreparedStatement stmt = dbController.getConnection().prepareStatement("INSERT INTO users (name, email, password) VALUES (?, ?, ?)");
+      PreparedStatement stmt = dbController.getConnection().prepareStatement("INSERT INTO clients (name, email, password) VALUES (?, ?, ?)");
       stmt.setString(1, client.getName());
       stmt.setString(2, client.getEmail());
       stmt.setString(3, hashedPassword);
@@ -40,8 +40,10 @@ public class ClientController {
   public boolean hasClient() {
     int count = 0;
     try {
-      Statement stmt = dbController.getConnection().createStatement();
-      ResultSet res = stmt.executeQuery("SELECT COUNT(*) FROM clients WHERE email = " + client.getEmail());      
+      PreparedStatement stmt = dbController.getConnection().prepareStatement("SELECT COUNT(*) FROM clients WHERE email = ?");
+      stmt.setString(1, client.getEmail());
+      ResultSet res = stmt.executeQuery();   
+      res.next();   
       count = res.getInt(1);      
     } catch (SQLException e) {
       // TODO Auto-generated catch block
@@ -49,16 +51,5 @@ public class ClientController {
     }
 
     return count > 0;
-  }
-
-  public String getToken() {
-    String token = JWT.create()
-    .withIssuer("payment-system")
-    .withClaim("name", client.getName())
-    .withClaim("email", client.getEmail())
-    .withExpiresAt(new Date(System.currentTimeMillis() + 3600 * 1000))
-    .sign(Algorithm.HMAC256("SecretKey"));
-
-    return token;
   }
 }

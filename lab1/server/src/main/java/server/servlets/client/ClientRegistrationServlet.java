@@ -10,8 +10,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import server.db.ClientController;
-import server.db.DBController;
+import server.JWTService;
+import server.db.DBClientController;
 import server.db.classes.Client;
 
 @WebServlet("/client/registration")
@@ -22,15 +22,27 @@ public class ClientRegistrationServlet extends HttpServlet {
     String email = req.getParameter("email");    
     String password = req.getParameter("password");      
     Client client = new Client(username, email, password);
-    ClientController cc = new ClientController(client);
+    DBClientController clientDB = new DBClientController(client);
     
-    if (cc.hasClient()) {
+    if (clientDB.hasClient()) {
       resp.setStatus(HttpServletResponse.SC_CONFLICT);
+      resp.setContentType("application/json");
+      resp.getWriter().write("{\"error\": \"User already exists\"}");
+      resp.getWriter().close();
       return;
     }
 
-    cc.addClient();
-    String token = cc.getToken();
+    clientDB.addClient();
+    String token = JWTService.generateJWT(client);
+    // try {
+    //   JWTService.verifyToken("dfgsdgfd"); 
+    // } catch (Exception e) {
+    //   resp.setStatus(HttpServletResponse.SC_CONFLICT);
+    //   resp.setContentType("application/json");
+    //   resp.getWriter().write("{\"error\": \"Wrong token\"}");
+    //   resp.getWriter().close();
+    //   return;
+    // }    
 
     PrintWriter writer = resp.getWriter();
     writer.println(token);    
