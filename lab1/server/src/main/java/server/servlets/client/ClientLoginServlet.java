@@ -1,6 +1,5 @@
 package server.servlets.client;
 
-import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.PrintWriter;
 
@@ -14,32 +13,27 @@ import server.JWTService;
 import server.db.DBClientController;
 import server.db.classes.Client;
 
-@WebServlet("/client/registration")
-public class ClientRegistrationServlet extends HttpServlet {
-  @Override  
+@WebServlet("/client/login")
+public class ClientLoginServlet extends HttpServlet {
+  @Override
   protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
     Client client = new Client(req);
     DBClientController clientDB = new DBClientController(client);
-    
-    if (clientDB.hasClientWithEmail()) {
+
+    if (!clientDB.hasClientWithEmail()) {
       resp.setStatus(HttpServletResponse.SC_CONFLICT);
       resp.setContentType("application/json");
-      resp.getWriter().write("{\"error\": \"User already exists\"}");
+      resp.getWriter().write("{\"error\": \"No user with such email\"}");
       resp.getWriter().close();
       return;
+    } else if (!clientDB.checkPassword()) {
+      resp.setStatus(HttpServletResponse.SC_CONFLICT);
+      resp.setContentType("application/json");
+      resp.getWriter().write("{\"error\": \"Wrong password\"}");
+      resp.getWriter().close();
     }
 
-    clientDB.addClient();
     String token = JWTService.generateJWT(client);
-    // try {
-    //   JWTService.verifyToken("dfgsdgfd"); 
-    // } catch (Exception e) {
-    //   resp.setStatus(HttpServletResponse.SC_CONFLICT);
-    //   resp.setContentType("application/json");
-    //   resp.getWriter().write("{\"error\": \"Wrong token\"}");
-    //   resp.getWriter().close();
-    //   return;
-    // }    
 
     PrintWriter writer = resp.getWriter();
     writer.println(token);    

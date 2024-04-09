@@ -26,9 +26,9 @@ public class DBClientController {
   public void addClient() {
     String hashedPassword = BCrypt.hashpw(client.getPassword(), BCrypt.gensalt());
     try {
-      PreparedStatement stmt = dbController.getConnection().prepareStatement("INSERT INTO clients (name, email, password) VALUES (?, ?, ?)");
-      stmt.setString(1, client.getName());
-      stmt.setString(2, client.getEmail());
+      PreparedStatement stmt = this.dbController.getConnection().prepareStatement("INSERT INTO clients (name, email, password) VALUES (?, ?, ?)");
+      stmt.setString(1, this.client.getName());
+      stmt.setString(2, this.client.getEmail());
       stmt.setString(3, hashedPassword);
       stmt.executeUpdate();
     } catch (SQLException e) {
@@ -37,11 +37,11 @@ public class DBClientController {
     }
   }
 
-  public boolean hasClient() {
+  public boolean hasClientWithEmail() {
     int count = 0;
     try {
-      PreparedStatement stmt = dbController.getConnection().prepareStatement("SELECT COUNT(*) FROM clients WHERE email = ?");
-      stmt.setString(1, client.getEmail());
+      PreparedStatement stmt = this.dbController.getConnection().prepareStatement("SELECT COUNT(*) FROM clients WHERE email = ?");
+      stmt.setString(1, this.client.getEmail());
       ResultSet res = stmt.executeQuery();   
       res.next();   
       count = res.getInt(1);      
@@ -51,5 +51,23 @@ public class DBClientController {
     }
 
     return count > 0;
+  }
+
+  public boolean checkPassword() {
+    boolean isPasswordMatch = false;
+    PreparedStatement stmt;
+    try {
+      stmt = this.dbController.getConnection().prepareStatement("SELECT * FROM clients WHERE email = ?");
+      stmt.setString(1, client.getEmail()); 
+      ResultSet res = stmt.executeQuery();   
+      res.next();
+      String hashedPassword = res.getString("password");      
+
+      isPasswordMatch = BCrypt.checkpw(this.client.getPassword(), hashedPassword);
+    } catch (SQLException e) {      
+      e.printStackTrace();
+    }
+
+    return isPasswordMatch;
   }
 }
