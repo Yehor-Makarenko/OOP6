@@ -24,6 +24,23 @@ public class DBClientController {
 
   }
 
+  public static int getIdByEmail(String email) {
+    int id = -1;
+    try {
+      PreparedStatement stmt = dbController.getConnection().prepareStatement("SELECT * FORM clients WHERE email = ?");
+      stmt.setString(1, email);
+      ResultSet res = stmt.executeQuery();
+      if (res.next()) {
+        id = res.getInt("client_id");
+      }
+    } catch (SQLException e) {
+      // TODO Auto-generated catch block
+      e.printStackTrace();
+    }
+
+    return id;
+  }
+
   public static void addClient(String name, String email, String password) {
     String hashedPassword = BCrypt.hashpw(password, BCrypt.gensalt());
     try {

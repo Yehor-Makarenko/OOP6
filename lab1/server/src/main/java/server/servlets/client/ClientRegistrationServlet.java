@@ -18,7 +18,10 @@ import server.db.classes.Client;
 public class ClientRegistrationServlet extends HttpServlet {
   @Override  
   protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-    Client client = new Client(req);    
+    String username = req.getParameter("username");
+    String email = req.getParameter("email");
+    String password = req.getParameter("password");
+    Client client = new Client(username, email, password);       
     
     if (DBClientController.hasClientWithEmail(client.getEmail())) {
       resp.setStatus(HttpServletResponse.SC_CONFLICT);
