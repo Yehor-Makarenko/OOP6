@@ -14,10 +14,10 @@ public class CORSFilter implements Filter {
         HttpServletResponse httpResponse = (HttpServletResponse) response;
         HttpServletRequest httpRequest = (HttpServletRequest) request;
                 
-        if (!httpRequest.getHeader("Origin").equals("http://127.0.0.1:5500")) {
-            chain.doFilter(request, response);
-            return;
-        }
+        // if (!httpRequest.getHeader("Origin").equals("http://127.0.0.1:5500")) {
+        //     chain.doFilter(request, response);
+        //     return;
+        // }
         
         // Разрешаем доступ с любого источника
         httpResponse.setHeader("Access-Control-Allow-Origin", "*");
