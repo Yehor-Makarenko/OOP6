@@ -14,7 +14,7 @@ import server.db.DBCardController;
 import server.db.DBClientController;
 import server.db.classes.Card;
 
-@WebServlet("/authorized/card/")
+@WebServlet("/auth/card/")
 public class ClientCardsServlet extends HttpServlet {
   @Override
   protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {        
