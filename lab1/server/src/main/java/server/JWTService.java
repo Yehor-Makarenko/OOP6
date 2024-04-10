@@ -8,31 +8,32 @@ import com.auth0.jwt.exceptions.JWTVerificationException;
 import com.auth0.jwt.interfaces.DecodedJWT;
 
 import server.db.classes.Client;
+import server.servlets.dtos.UserJWT;
 
 public class JWTService {
   private static Algorithm algorithm = Algorithm.HMAC256("aaa");
   private static int expirationTime = 3600000;
   private static String issuer = "payment-system";
 
-  public static String generateJWT(Client client) { // class for ClientJWT and mapstructaav
+  public static String generateJWT(UserJWT user) { // class for ClientJWT and mapstructaav
     String token = JWT.create()
-    .withIssuer(issuer)
-    .withClaim("name", client.getName())
-    .withClaim("email", client.getEmail())
+    .withIssuer(issuer)    
+    .withClaim("email", user.getEmail())
+    .withClaim("role", user.getRole())
     .withExpiresAt(new Date(System.currentTimeMillis() + expirationTime))
     .sign(algorithm);
 
     return token;
   }
 
-  public static Client verifyToken(String token) throws JWTVerificationException {
+  public static UserJWT verifyToken(String token) throws JWTVerificationException {
     DecodedJWT jwt = JWT.require(algorithm)
       .withIssuer(issuer)
       .build()
       .verify(token);
     
-    String name = jwt.getClaim("name").asString();
     String email = jwt.getClaim("email").asString();
-    return new Client(name, email, email);
+    String role = jwt.getClaim("role").asString();
+    return new UserJWT(email, role);
   }
 }

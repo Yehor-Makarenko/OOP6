@@ -12,6 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 import server.JWTService;
 import server.db.DBClientController;
 import server.db.classes.Client;
+import server.servlets.dtos.UserJWT;
 
 @WebServlet("/client/login")
 public class ClientLoginServlet extends HttpServlet {
@@ -19,23 +20,23 @@ public class ClientLoginServlet extends HttpServlet {
   protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
     String username = req.getParameter("username");
     String email = req.getParameter("email");
-    String password = req.getParameter("password");
-    Client client = new Client(username, email, password);    
+    String password = req.getParameter("password");  
+    UserJWT userJWT = new UserJWT(email, "client");
 
-    if (!DBClientController.hasClientWithEmail(client.getEmail())) {
+    if (!DBClientController.hasClientWithEmail(email)) {
       resp.setStatus(HttpServletResponse.SC_CONFLICT);
       resp.setContentType("application/json");
       resp.getWriter().write("{\"error\": \"No user with such email\"}");
       resp.getWriter().close();
       return;
-    } else if (!DBClientController.checkPassword(client.getEmail(), client.getPassword())) {
+    } else if (!DBClientController.checkPassword(email, password)) {
       resp.setStatus(HttpServletResponse.SC_CONFLICT);
       resp.setContentType("application/json");
       resp.getWriter().write("{\"error\": \"Wrong password\"}");
       resp.getWriter().close();
     }
 
-    String token = JWTService.generateJWT(client);
+    String token = JWTService.generateJWT(userJWT); //make jwt user
 
     PrintWriter writer = resp.getWriter();
     writer.println(token);    

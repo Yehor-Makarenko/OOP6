@@ -17,6 +17,7 @@ import server.db.DBCardController;
 import server.db.DBClientController;
 import server.db.classes.Account;
 import server.db.classes.Card;
+import server.db.classes.Client;
 import server.servlets.dtos.CardAccountInfo;
 
 @WebServlet("/auth/card/")
@@ -24,8 +25,8 @@ public class ClientCardsServlet extends HttpServlet {
   @Override
   protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {        
     String email = (String) req.getAttribute("email");
-    int clientId = DBClientController.getIdByEmail(email);
-    ArrayList<Card> cards = DBCardController.getUserCards(clientId);
+    Client client = DBClientController.getClientByEmail(email);
+    ArrayList<Card> cards = DBCardController.getUserCards(client.getId());
     ArrayList<CardAccountInfo> cardAccountInfos = new ArrayList<>();
 
     for (Card card: cards) {

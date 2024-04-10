@@ -13,6 +13,7 @@ import com.auth0.jwt.exceptions.JWTVerificationException;
 
 import server.JWTService;
 import server.db.classes.Client;
+import server.servlets.dtos.UserJWT;
 
 @WebFilter("/auth/*")
 public class AuthorizeFilter extends HttpFilter {
@@ -21,10 +22,10 @@ public class AuthorizeFilter extends HttpFilter {
       throws IOException, ServletException {
     String token = req.getHeader("Authorization").split(" ")[1];
     try {
-      Client client = JWTService.verifyToken(token);
-      req.setAttribute("email", client.getEmail());   
+      UserJWT user = JWTService.verifyToken(token);
+      req.setAttribute("email", user.getEmail());   
       chain.doFilter(req, res);   
-    } catch (Error e) {
+    } catch (Exception e) {
       res.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
       res.getWriter().println("Error, unauthorized!");
       res.getWriter().close();      

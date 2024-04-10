@@ -13,6 +13,7 @@ import javax.servlet.http.HttpServletResponse;
 import server.JWTService;
 import server.db.DBClientController;
 import server.db.classes.Client;
+import server.servlets.dtos.UserJWT;
 
 @WebServlet("/client/registration")
 public class ClientRegistrationServlet extends HttpServlet {
@@ -20,10 +21,10 @@ public class ClientRegistrationServlet extends HttpServlet {
   protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
     String username = req.getParameter("username");
     String email = req.getParameter("email");
-    String password = req.getParameter("password");
-    Client client = new Client(username, email, password);       
+    String password = req.getParameter("password");   
+    UserJWT userJWT = new UserJWT(email, "client");   
     
-    if (DBClientController.hasClientWithEmail(client.getEmail())) {
+    if (DBClientController.hasClientWithEmail(email)) {
       resp.setStatus(HttpServletResponse.SC_CONFLICT);
       resp.setContentType("application/json");
       resp.getWriter().write("{\"error\": \"User already exists\"}");
@@ -31,8 +32,8 @@ public class ClientRegistrationServlet extends HttpServlet {
       return;
     }
 
-    DBClientController.addClient(client.getName(), client.getEmail(), client.getPassword());
-    String token = JWTService.generateJWT(client);
+    DBClientController.addClient(username, email, password);
+    String token = JWTService.generateJWT(userJWT);
     // try {
     //   JWTService.verifyToken("dfgsdgfd"); 
     // } catch (Exception e) {

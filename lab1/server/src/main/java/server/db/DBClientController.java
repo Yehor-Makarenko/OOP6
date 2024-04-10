@@ -24,21 +24,21 @@ public class DBClientController {
 
   }
 
-  public static int getIdByEmail(String email) {
-    int id = -1;
+  public static Client getClientByEmail(String email) { // Make getClientByEmail
+    Client client = null;
     try {
       PreparedStatement stmt = dbController.getConnection().prepareStatement("SELECT * FROM clients WHERE email = ?");
       stmt.setString(1, email);
       ResultSet res = stmt.executeQuery();
       if (res.next()) {
-        id = res.getInt("client_id");
+        client = new Client(res.getInt("client_id"), res.getString("name"), res.getString("email"));
       }
     } catch (SQLException e) {
       // TODO Auto-generated catch block
       e.printStackTrace();
     }
 
-    return id;
+    return client;
   }
 
   public static void addClient(String name, String email, String password) {

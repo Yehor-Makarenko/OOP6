@@ -14,7 +14,7 @@ public class DBAccountController {
   }
 
   public static Account getAccountByCardId(int cardId) {
-    Account account = new Account();
+    Account account = null;
     try {
       PreparedStatement stmt = dbController.getConnection().prepareStatement("SELECT * FROM accounts WHERE car_id = ?");
       stmt.setInt(1, cardId);
