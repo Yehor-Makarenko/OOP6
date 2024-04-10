@@ -27,7 +27,7 @@ public class DBClientController {
   public static int getIdByEmail(String email) {
     int id = -1;
     try {
-      PreparedStatement stmt = dbController.getConnection().prepareStatement("SELECT * FORM clients WHERE email = ?");
+      PreparedStatement stmt = dbController.getConnection().prepareStatement("SELECT * FROM clients WHERE email = ?");
       stmt.setString(1, email);
       ResultSet res = stmt.executeQuery();
       if (res.next()) {

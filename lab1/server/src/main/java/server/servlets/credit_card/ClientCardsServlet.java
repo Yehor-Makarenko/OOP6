@@ -17,13 +17,12 @@ import server.db.classes.Card;
 @WebServlet("/authorized/card/")
 public class ClientCardsServlet extends HttpServlet {
   @Override
-  protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-    String token = req.getHeader("Authorization").split(" ")[1];
-    String email = JWTService.verifyToken(token).getEmail();
+  protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {        
+    String email = (String) req.getAttribute("email");
     int clientId = DBClientController.getIdByEmail(email);
     ArrayList<Card> cards = DBCardController.getUserCards(clientId);
 
-    resp.getWriter().write("All ok!");
+    resp.getWriter().write("All ok! Length: " + cards.size());
     resp.getWriter().close();
   }
 }

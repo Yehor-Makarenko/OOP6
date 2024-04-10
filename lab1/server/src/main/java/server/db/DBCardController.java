@@ -20,7 +20,7 @@ public class DBCardController {
   public static ArrayList<Card> getUserCards(int userId) {
     ArrayList<Card> cards = new ArrayList<>();
     try {
-      PreparedStatement stmt = dbController.getConnection().prepareStatement("SELECT * FROM cards WHERE client_id = ?");
+      PreparedStatement stmt = dbController.getConnection().prepareStatement("SELECT * FROM credit_cards WHERE client_id = ?");
       stmt.setInt(1, userId);
       ResultSet res = stmt.executeQuery();
 
