@@ -14,7 +14,7 @@ import com.auth0.jwt.exceptions.JWTVerificationException;
 import server.JWTService;
 import server.db.classes.Client;
 
-@WebFilter("/auth")
+@WebFilter("/auth/*")
 public class AuthorizeFilter extends HttpFilter {
   @Override
   protected void doFilter(HttpServletRequest req, HttpServletResponse res, FilterChain chain)
@@ -24,7 +24,7 @@ public class AuthorizeFilter extends HttpFilter {
       Client client = JWTService.verifyToken(token);
       req.setAttribute("email", client.getEmail());   
       chain.doFilter(req, res);   
-    } catch (JWTVerificationException e) {
+    } catch (Error e) {
       res.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
       res.getWriter().println("Error, unauthorized!");
       res.getWriter().close();      

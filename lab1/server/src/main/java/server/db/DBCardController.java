@@ -25,7 +25,7 @@ public class DBCardController {
       ResultSet res = stmt.executeQuery();
 
       while (res.next()) {
-        Card card = new Card(res.getInt("card_number"), res.getDate("expiration_date"), res.getInt("cvv"));
+        Card card = new Card(res.getInt("card_id"), res.getInt("card_number"), res.getDate("expiration_date"), res.getInt("cvv"));
         cards.add(card);
       }
     } catch (SQLException e) {
