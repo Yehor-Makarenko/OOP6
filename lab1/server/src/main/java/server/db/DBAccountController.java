@@ -4,7 +4,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-import server.db.classes.Account;
+import server.db.classes.DBAccount;
 
 public class DBAccountController {
   private static DBController dbController = DBController.getInstance(); 
@@ -13,15 +13,15 @@ public class DBAccountController {
 
   }
 
-  public static Account getAccountByCardId(int cardId) {
-    Account account = null;
+  public static DBAccount getAccountByCardId(int cardId) {
+    DBAccount account = null;
     try {
-      PreparedStatement stmt = dbController.getConnection().prepareStatement("SELECT * FROM accounts WHERE car_id = ?");
+      PreparedStatement stmt = dbController.getConnection().prepareStatement("SELECT * FROM accounts WHERE card_id = ?");
       stmt.setInt(1, cardId);
       ResultSet res = stmt.executeQuery();
 
       if (res.next()) {
-        account = new Account(res.getInt("balance"), res.getBoolean("is_blocked"));
+        account = new DBAccount(res.getInt("balance"), res.getBoolean("is_blocked"));
       }
     } catch (SQLException e) {
       // TODO Auto-generated catch block

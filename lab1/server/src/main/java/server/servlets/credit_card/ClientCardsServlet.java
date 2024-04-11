@@ -25,7 +25,7 @@ import server.mapstruct.DBCardCardInfoMapper;
 import server.servlets.dtos.CardAccountInfo;
 import server.servlets.dtos.CardInfo;
 
-@WebServlet("/auth/card/")
+@WebServlet("/auth/card")
 public class ClientCardsServlet extends HttpServlet {
   @Override
   protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {        

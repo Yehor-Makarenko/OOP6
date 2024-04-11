@@ -16,7 +16,7 @@ import server.db.classes.DBAccount;
 import server.db.classes.DBCard;
 import server.servlets.dtos.CardAccountInfo;
 
-@WebServlet("/auth/card/:number")
+@WebServlet("/auth/card/number")
 public class ClientCardServlet extends HttpServlet {
   @Override
   protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
