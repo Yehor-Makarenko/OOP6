@@ -7,7 +7,7 @@ import lombok.Getter;
 
 @Getter
 @AllArgsConstructor
-public class Client {
+public class DBClient {
   private int id;
   private String name;
   private String email;  

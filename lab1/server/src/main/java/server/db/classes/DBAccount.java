@@ -7,7 +7,7 @@ import lombok.Setter;
 
 @Getter
 @AllArgsConstructor
-public class Account {
+public class DBAccount {
   private int balance;
   private boolean isBlocked;
 }

@@ -15,7 +15,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
-import server.db.classes.Client;
+import server.db.classes.DBClient;
 
 public class DBClientController {  
   private static DBController dbController = DBController.getInstance();  
@@ -24,14 +24,14 @@ public class DBClientController {
 
   }
 
-  public static Client getClientByEmail(String email) { // Make getClientByEmail
-    Client client = null;
+  public static DBClient getClientByEmail(String email) { // Make getClientByEmail
+    DBClient client = null;
     try {
       PreparedStatement stmt = dbController.getConnection().prepareStatement("SELECT * FROM clients WHERE email = ?");
       stmt.setString(1, email);
       ResultSet res = stmt.executeQuery();
       if (res.next()) {
-        client = new Client(res.getInt("client_id"), res.getString("name"), res.getString("email"));
+        client = new DBClient(res.getInt("client_id"), res.getString("name"), res.getString("email"));
       }
     } catch (SQLException e) {
       // TODO Auto-generated catch block

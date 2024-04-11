@@ -9,34 +9,39 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.mapstruct.Mapper;
+import org.mapstruct.factory.Mappers;
+
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import server.JWTService;
 import server.db.DBAccountController;
 import server.db.DBCardController;
 import server.db.DBClientController;
-import server.db.classes.Account;
-import server.db.classes.Card;
-import server.db.classes.Client;
+import server.db.classes.DBAccount;
+import server.db.classes.DBCard;
+import server.db.classes.DBClient;
+import server.mapstruct.DBCardCardInfoMapper;
 import server.servlets.dtos.CardAccountInfo;
+import server.servlets.dtos.CardInfo;
 
 @WebServlet("/auth/card/")
 public class ClientCardsServlet extends HttpServlet {
   @Override
   protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {        
     String email = (String) req.getAttribute("email");
-    Client client = DBClientController.getClientByEmail(email);
-    ArrayList<Card> cards = DBCardController.getUserCards(client.getId());
-    ArrayList<CardAccountInfo> cardAccountInfos = new ArrayList<>();
+    DBClient client = DBClientController.getClientByEmail(email);
+    ArrayList<DBCard> cards = DBCardController.getClientCards(client.getId());
+    ArrayList<CardInfo> cardInfos = new ArrayList<>();
 
-    for (Card card: cards) {
-      Account account = DBAccountController.getAccountByCardId(card.getId());      
-      cardAccountInfos.add(new CardAccountInfo(card.getNumber(), card.getExpirationDate(), card.getCvv(), 
-        account.getBalance(), account.isBlocked()));
+    for (DBCard card: cards) {
+      DBCardCardInfoMapper mapper = Mappers.getMapper(DBCardCardInfoMapper.class);
+      CardInfo cardInfo = mapper.dbCardToCardInfo(card);
+      cardInfos.add(cardInfo);
     }
 
     ObjectMapper objectMapper = new ObjectMapper();
-    String resultJSON = objectMapper.writeValueAsString(cardAccountInfos);
+    String resultJSON = objectMapper.writeValueAsString(cardInfos);
 
     resp.setContentType("application/json");
     resp.getWriter().write(resultJSON);    

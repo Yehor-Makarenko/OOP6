@@ -12,7 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import server.JWTService;
 import server.db.DBClientController;
-import server.db.classes.Client;
+import server.db.classes.DBClient;
 import server.servlets.dtos.UserJWT;
 
 @WebServlet("/client/registration")

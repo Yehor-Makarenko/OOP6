@@ -9,7 +9,7 @@ import lombok.Getter;
 
 @Getter
 @AllArgsConstructor
-public class Card {
+public class DBCard {
   private int id;
   private int number;
   private Date expirationDate;
