@@ -30,4 +30,16 @@ public class DBAccountController {
 
     return account;
   }
+
+  public void setBalance(int accountID, int newBalance) {
+    try {
+      PreparedStatement stmt = dbController.getConnection().prepareStatement("UPDATE accounts SET balance = ? WHERE account_id = ?");
+      stmt.setInt(1, newBalance);
+      stmt.setInt(2, accountID);
+      stmt.executeUpdate();      
+    } catch (SQLException e) {
+      // TODO Auto-generated catch block
+      e.printStackTrace();
+    }
+  }
 }
