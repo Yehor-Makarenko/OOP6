@@ -22,6 +22,15 @@ public class ClientCardServlet extends HttpServlet {
   protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
     int cardNumer = Integer.parseInt(req.getParameter("number"));
     DBCard dbCard = DBCardController.getCardByNumber(cardNumer);
+
+    if (dbCard == null) {
+      resp.setStatus(HttpServletResponse.SC_CONFLICT);
+      resp.setContentType("application/json");
+      resp.getWriter().write("{\"error\": \"No card with such number\"}");
+      resp.getWriter().close();
+      return;
+    }
+
     DBAccount dbAccount = DBAccountController.getAccountByCardId(dbCard.getId());
     CardAccountInfo cardAccountInfo = new CardAccountInfo(dbCard.getNumber(), dbCard.getExpirationDate(), 
       dbCard.getCvv(), dbAccount.getBalance(), dbAccount.isBlocked());

@@ -21,7 +21,7 @@ public class DBAccountController {
       ResultSet res = stmt.executeQuery();
 
       if (res.next()) {
-        account = new DBAccount(res.getInt("balance"), res.getBoolean("is_blocked"));
+        account = new DBAccount(res.getInt("account_id"), res.getInt("balance"), res.getBoolean("is_blocked"));
       }
     } catch (SQLException e) {
       // TODO Auto-generated catch block
@@ -31,7 +31,7 @@ public class DBAccountController {
     return account;
   }
 
-  public void setBalance(int accountID, int newBalance) {
+  public static void setBalance(int accountID, int newBalance) {
     try {
       PreparedStatement stmt = dbController.getConnection().prepareStatement("UPDATE accounts SET balance = ? WHERE account_id = ?");
       stmt.setInt(1, newBalance);
