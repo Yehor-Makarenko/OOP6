@@ -4,9 +4,11 @@ import javax.servlet.http.HttpServletRequest;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 @Getter
 @AllArgsConstructor
+@NoArgsConstructor
 public class DBClient {
   private int id;
   private String name;

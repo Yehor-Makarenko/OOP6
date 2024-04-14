@@ -14,7 +14,7 @@ import server.db.DBPaymentController;
 import server.db.classes.DBAccount;
 import server.db.classes.DBCard;
 
-@WebServlet("auth/payment")
+@WebServlet("/auth/payment")
 public class PaymentServlet extends HttpServlet {
   @Override
   protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {

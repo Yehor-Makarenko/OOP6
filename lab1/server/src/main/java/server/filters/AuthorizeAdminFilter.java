@@ -16,9 +16,9 @@ import server.servlets.dtos.UserJWT;
 public class AuthorizeAdminFilter extends HttpFilter {
   @Override
   protected void doFilter(HttpServletRequest req, HttpServletResponse res, FilterChain chain)
-      throws IOException, ServletException {
-      String token = req.getHeader("Authorization").split(" ")[1];
-      try {
+      throws IOException, ServletException {      
+        try {
+        String token = req.getHeader("Authorization").split(" ")[1];
         UserJWT user = JWTService.verifyToken(token);
 
         if (!user.getRole().equals("admin")) {

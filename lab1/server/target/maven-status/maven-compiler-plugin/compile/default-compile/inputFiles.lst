@@ -6,6 +6,7 @@ c:\Users\makye\OneDrive\Рабочий стол\OOP6\lab1\server\src\main\java\s
 c:\Users\makye\OneDrive\Рабочий стол\OOP6\lab1\server\src\main\java\server\db\DBCardController.java
 c:\Users\makye\OneDrive\Рабочий стол\OOP6\lab1\server\src\main\java\server\db\DBClientController.java
 c:\Users\makye\OneDrive\Рабочий стол\OOP6\lab1\server\src\main\java\server\db\DBController.java
+c:\Users\makye\OneDrive\Рабочий стол\OOP6\lab1\server\src\main\java\server\db\DBPaymentController.java
 c:\Users\makye\OneDrive\Рабочий стол\OOP6\lab1\server\src\main\java\server\filters\AuthorizeAdminFilter.java
 c:\Users\makye\OneDrive\Рабочий стол\OOP6\lab1\server\src\main\java\server\filters\AuthorizeFilter.java
 c:\Users\makye\OneDrive\Рабочий стол\OOP6\lab1\server\src\main\java\server\JWTService.java
@@ -19,4 +20,5 @@ c:\Users\makye\OneDrive\Рабочий стол\OOP6\lab1\server\src\main\java\s
 c:\Users\makye\OneDrive\Рабочий стол\OOP6\lab1\server\src\main\java\server\servlets\dtos\CardAccountInfo.java
 c:\Users\makye\OneDrive\Рабочий стол\OOP6\lab1\server\src\main\java\server\servlets\dtos\CardInfo.java
 c:\Users\makye\OneDrive\Рабочий стол\OOP6\lab1\server\src\main\java\server\servlets\dtos\UserJWT.java
+c:\Users\makye\OneDrive\Рабочий стол\OOP6\lab1\server\src\main\java\server\servlets\payment\PaymentServlet.java
 c:\Users\makye\OneDrive\Рабочий стол\OOP6\lab1\server\src\main\java\server\SSExample.java

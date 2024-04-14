@@ -7,6 +7,7 @@ import lombok.Setter;
 
 @Getter
 @AllArgsConstructor
+@NoArgsConstructor
 public class DBAccount {
   private int id;
   private int balance;

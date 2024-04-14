@@ -19,9 +19,9 @@ import server.servlets.dtos.UserJWT;
 public class AuthorizeFilter extends HttpFilter {
   @Override
   protected void doFilter(HttpServletRequest req, HttpServletResponse res, FilterChain chain)
-      throws IOException, ServletException {
-    String token = req.getHeader("Authorization").split(" ")[1];
+      throws IOException, ServletException {    
     try {
+      String token = req.getHeader("Authorization").split(" ")[1];
       UserJWT user = JWTService.verifyToken(token);
       req.setAttribute("email", user.getEmail());   
       chain.doFilter(req, res);   
