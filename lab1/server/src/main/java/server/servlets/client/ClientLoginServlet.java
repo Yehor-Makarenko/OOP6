@@ -21,7 +21,7 @@ public class ClientLoginServlet extends HttpServlet {
     String username = req.getParameter("username");
     String email = req.getParameter("email");
     String password = req.getParameter("password");  
-    UserJWT userJWT = new UserJWT(email, "client");
+    UserJWT userJWT = new UserJWT(email, "CLIENT");
 
     if (!DBClientController.hasClientWithEmail(email)) {
       resp.setStatus(HttpServletResponse.SC_CONFLICT);

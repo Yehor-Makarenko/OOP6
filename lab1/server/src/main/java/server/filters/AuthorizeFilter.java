@@ -23,6 +23,7 @@ public class AuthorizeFilter extends HttpFilter {
     try {
       String token = req.getHeader("Authorization").split(" ")[1];
       UserJWT user = JWTService.verifyToken(token);
+      req.setAttribute("role", user.getRole());      
       req.setAttribute("email", user.getEmail());   
       chain.doFilter(req, res);   
     } catch (Exception e) {

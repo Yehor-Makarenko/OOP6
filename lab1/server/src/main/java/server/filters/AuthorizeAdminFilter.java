@@ -25,6 +25,7 @@ public class AuthorizeAdminFilter extends HttpFilter {
           throw new Exception();
         }
 
+        req.setAttribute("role", user.getRole());      
         req.setAttribute("email", user.getEmail());   
         chain.doFilter(req, res);   
       } catch (Exception e) {

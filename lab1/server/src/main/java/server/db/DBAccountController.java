@@ -42,4 +42,28 @@ public class DBAccountController {
       e.printStackTrace();
     }
   }
+
+  public static void block(int accountID) {
+    try {
+      PreparedStatement stmt = dbController.getConnection().prepareStatement("UPDATE accounts SET is_blocked = ? WHERE account_id = ?");
+      stmt.setBoolean(1, true);
+      stmt.setInt(2, accountID);
+      stmt.executeUpdate();      
+    } catch (SQLException e) {
+      // TODO Auto-generated catch block
+      e.printStackTrace();
+    }
+  }
+
+  public static void unblock(int accountID) {
+    try {
+      PreparedStatement stmt = dbController.getConnection().prepareStatement("UPDATE accounts SET is_blocked = ? WHERE account_id = ?");
+      stmt.setBoolean(1, false);
+      stmt.setInt(2, accountID);
+      stmt.executeUpdate();      
+    } catch (SQLException e) {
+      // TODO Auto-generated catch block
+      e.printStackTrace();
+    }
+  }
 }

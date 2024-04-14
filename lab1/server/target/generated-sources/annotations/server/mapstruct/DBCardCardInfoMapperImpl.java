@@ -6,7 +6,7 @@ import server.servlets.dtos.CardInfo;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2024-04-14T10:42:10+0300",
+    date = "2024-04-14T13:47:54+0300",
     comments = "version: 1.5.5.Final, compiler: javac, environment: Java 22 (Oracle Corporation)"
 )
 public class DBCardCardInfoMapperImpl implements DBCardCardInfoMapper {
