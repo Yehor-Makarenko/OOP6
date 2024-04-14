@@ -17,8 +17,7 @@ import server.servlets.dtos.UserJWT;
 @WebServlet("/client/login")
 public class ClientLoginServlet extends HttpServlet {
   @Override
-  protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-    String username = req.getParameter("username");
+  protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {    
     String email = req.getParameter("email");
     String password = req.getParameter("password");  
     UserJWT userJWT = new UserJWT(email, "CLIENT");

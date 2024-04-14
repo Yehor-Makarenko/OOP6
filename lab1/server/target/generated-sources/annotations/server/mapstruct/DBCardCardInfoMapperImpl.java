@@ -6,8 +6,8 @@ import server.servlets.dtos.CardInfo;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2024-04-14T13:47:54+0300",
-    comments = "version: 1.5.5.Final, compiler: javac, environment: Java 22 (Oracle Corporation)"
+    date = "2024-04-14T19:16:21+0300",
+    comments = "version: 1.5.5.Final, compiler: Eclipse JDT (IDE) 3.38.0.v20240325-1403, environment: Java 17.0.10 (Eclipse Adoptium)"
 )
 public class DBCardCardInfoMapperImpl implements DBCardCardInfoMapper {
 
@@ -19,9 +19,9 @@ public class DBCardCardInfoMapperImpl implements DBCardCardInfoMapper {
 
         CardInfo cardInfo = new CardInfo();
 
-        cardInfo.setNumber( card.getNumber() );
-        cardInfo.setExpirationDate( card.getExpirationDate() );
         cardInfo.setCvv( card.getCvv() );
+        cardInfo.setExpirationDate( card.getExpirationDate() );
+        cardInfo.setNumber( card.getNumber() );
 
         return cardInfo;
     }
