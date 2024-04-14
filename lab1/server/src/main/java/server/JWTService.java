@@ -12,7 +12,7 @@ import server.servlets.dtos.UserJWT;
 
 public class JWTService {
   private static Algorithm algorithm = Algorithm.HMAC256("aaa");
-  private static int expirationTime = 3600000;
+  private static int expirationTime = 360000000;
   private static String issuer = "payment-system";
 
   public static String generateJWT(UserJWT user) { // class for ClientJWT and mapstructaav

@@ -31,7 +31,7 @@ public class PaymentServlet extends HttpServlet {
       return;
     }
 
-    DBPaymentController.makePayment(account.getId(), amount, description);
+    DBPaymentController.addPayment(account.getId(), amount, description);
     DBAccountController.setBalance(account.getId(), account.getBalance() - amount);
   }
 }
