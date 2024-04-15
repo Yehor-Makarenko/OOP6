@@ -8,11 +8,11 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import server.db.DBAccountController;
-import server.db.DBCardController;
-import server.db.DBPaymentController;
 import server.db.classes.DBAccount;
 import server.db.classes.DBCard;
+import server.db.controllers.DBAccountController;
+import server.db.controllers.DBCardController;
+import server.db.controllers.DBPaymentController;
 
 @WebServlet("/auth/payment")
 public class PaymentServlet extends HttpServlet {
@@ -21,8 +21,9 @@ public class PaymentServlet extends HttpServlet {
     int cardNumber = Integer.parseInt(req.getParameter("card_number"));
     int amount = Integer.parseInt(req.getParameter("amount"));    
     String description = req.getParameter("description");
-    DBCard card = DBCardController.getCardByNumber(cardNumber);
-    DBAccount account = DBAccountController.getAccountByCardId(card.getId());
+    DBAccountController accountController = new DBAccountController();
+    DBCard card = new DBCardController().getCardByNumber(cardNumber);
+    DBAccount account = accountController.getAccountByCardId(card.getId());
     if (account.getBalance() - amount < 0) {
       resp.setStatus(HttpServletResponse.SC_CONFLICT);
       resp.setContentType("application/json");
@@ -31,7 +32,7 @@ public class PaymentServlet extends HttpServlet {
       return;
     }
 
-    DBPaymentController.addPayment(account.getId(), amount, description);
-    DBAccountController.setBalance(account.getId(), account.getBalance() - amount);
+    new DBPaymentController().addPayment(account.getId(), amount, description);
+    accountController.setBalance(account.getId(), account.getBalance() - amount);
   }
 }

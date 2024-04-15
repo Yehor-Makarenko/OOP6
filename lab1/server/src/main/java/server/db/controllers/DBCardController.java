@@ -1,4 +1,4 @@
-package server.db;
+package server.db.controllers;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -10,17 +10,11 @@ import javax.naming.spi.DirStateFactory.Result;
 
 import server.db.classes.DBCard;
 
-public class DBCardController {
-  private static DBController dbController = DBController.getInstance();  
-
-  private DBCardController() {
-
-  }
-
-  public static ArrayList<DBCard> getClientCards(int userId) {
+public class DBCardController extends DBController {
+  public  ArrayList<DBCard> getClientCards(int userId) {
     ArrayList<DBCard> cards = new ArrayList<>();
     try {
-      PreparedStatement stmt = dbController.getConnection().prepareStatement("SELECT * FROM credit_cards WHERE client_id = ?");
+      PreparedStatement stmt = this.connection.prepareStatement("SELECT * FROM credit_cards WHERE client_id = ?");
       stmt.setInt(1, userId);
       ResultSet res = stmt.executeQuery();
 
@@ -36,10 +30,10 @@ public class DBCardController {
     return cards;
   }
 
-  public static DBCard getCardByNumber(int number) {
+  public  DBCard getCardByNumber(int number) {
     DBCard card = null;
     try {
-      PreparedStatement stmt = dbController.getConnection().prepareStatement("SELECT * FROM credit_cards WHERE card_number = ?");
+      PreparedStatement stmt = this.connection.prepareStatement("SELECT * FROM credit_cards WHERE card_number = ?");
       stmt.setInt(1, number);
       ResultSet res = stmt.executeQuery();
 

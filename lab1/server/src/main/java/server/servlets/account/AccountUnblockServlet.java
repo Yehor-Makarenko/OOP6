@@ -7,11 +7,11 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import server.db.DBAccountController;
-import server.db.DBAccountUnblocksController;
-import server.db.DBCardController;
 import server.db.classes.DBAccount;
 import server.db.classes.DBCard;
+import server.db.controllers.DBAccountController;
+import server.db.controllers.DBAccountUnblocksController;
+import server.db.controllers.DBCardController;
 
 public class AccountUnblockServlet extends HttpServlet {
   @Override
@@ -25,9 +25,10 @@ public class AccountUnblockServlet extends HttpServlet {
     }
 
     int cardNumber = Integer.parseInt(req.getParameter("card_number"));    
-    DBCard card = DBCardController.getCardByNumber(cardNumber);
-    DBAccount dbAccount = DBAccountController.getAccountByCardId(card.getId());    
-    DBAccountController.unblock(dbAccount.getId());
-    DBAccountUnblocksController.unblock(dbAccount.getId(), cardNumber); // Add admin id
+    DBCard card = new DBCardController().getCardByNumber(cardNumber);
+    DBAccountController accountController = new DBAccountController();
+    DBAccount dbAccount = accountController.getAccountByCardId(card.getId());    
+    accountController.unblock(dbAccount.getId());
+    new DBAccountUnblocksController().unblock(dbAccount.getId(), cardNumber); // Add admin id
   }
 }

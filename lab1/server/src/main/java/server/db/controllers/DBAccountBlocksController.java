@@ -1,20 +1,15 @@
-package server.db;
+package server.db.controllers;
 
+import java.sql.Connection;
 import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
-public class DBAccountBlocksController {
-  private static DBController dbController = DBController.getInstance(); 
-
-  private DBAccountBlocksController() {
-
-  }
-
-  public static void block(int accountID, int adminId, String reason) {
+public class DBAccountBlocksController extends DBController {  
+  public void block(int accountID, int adminId, String reason) {
     Date currentDate = new Date(System.currentTimeMillis());
     try {
-      PreparedStatement stmt = dbController.getConnection().prepareStatement("INSERT INTO account_blocks (account_id, admin_id, blocking_date, reason) VALUES (?, ?, ?, ?)");
+      PreparedStatement stmt = this.connection.prepareStatement("INSERT INTO account_blocks (account_id, admin_id, blocking_date, reason) VALUES (?, ?, ?, ?)");
       stmt.setInt(1, accountID);
       stmt.setInt(2, adminId);
       stmt.setDate(3, currentDate);
@@ -26,10 +21,10 @@ public class DBAccountBlocksController {
     }
   }
 
-  public static void block(int accountID, String reason) {
+  public void block(int accountID, String reason) {
     Date currentDate = new Date(System.currentTimeMillis());
     try {
-      PreparedStatement stmt = dbController.getConnection().prepareStatement("INSERT INTO account_blocks (account_id, blocking_date, reason) VALUES (?, ?, ?)");
+      PreparedStatement stmt = this.connection.prepareStatement("INSERT INTO account_blocks (account_id, blocking_date, reason) VALUES (?, ?, ?)");
       stmt.setInt(1, accountID);      
       stmt.setDate(2, currentDate);
       stmt.setString(3, reason);

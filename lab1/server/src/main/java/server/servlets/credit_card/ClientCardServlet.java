@@ -10,10 +10,10 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-import server.db.DBAccountController;
-import server.db.DBCardController;
 import server.db.classes.DBAccount;
 import server.db.classes.DBCard;
+import server.db.controllers.DBAccountController;
+import server.db.controllers.DBCardController;
 import server.servlets.dtos.CardAccountInfo;
 
 @WebServlet("/auth/card/number")
@@ -21,7 +21,7 @@ public class ClientCardServlet extends HttpServlet {
   @Override
   protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
     int cardNumer = Integer.parseInt(req.getParameter("number"));
-    DBCard dbCard = DBCardController.getCardByNumber(cardNumer);
+    DBCard dbCard = new DBCardController().getCardByNumber(cardNumer);
 
     if (dbCard == null) {
       resp.setStatus(HttpServletResponse.SC_CONFLICT);
@@ -31,7 +31,7 @@ public class ClientCardServlet extends HttpServlet {
       return;
     }
 
-    DBAccount dbAccount = DBAccountController.getAccountByCardId(dbCard.getId());
+    DBAccount dbAccount = new DBAccountController().getAccountByCardId(dbCard.getId());
     CardAccountInfo cardAccountInfo = new CardAccountInfo(dbCard.getNumber(), dbCard.getExpirationDate(), 
       dbCard.getCvv(), dbAccount.getBalance(), dbAccount.isBlocked());
 

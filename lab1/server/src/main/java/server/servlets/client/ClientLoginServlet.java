@@ -10,8 +10,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import server.JWTService;
-import server.db.DBClientController;
-import server.db.classes.DBClient;
+import server.db.classes.DBUser;
+import server.db.controllers.user.DBClientController;
 import server.servlets.dtos.UserJWT;
 
 @WebServlet("/client/login")
@@ -21,14 +21,15 @@ public class ClientLoginServlet extends HttpServlet {
     String email = req.getParameter("email");
     String password = req.getParameter("password");  
     UserJWT userJWT = new UserJWT(email, "CLIENT");
+    DBClientController clientController = new DBClientController();
 
-    if (!DBClientController.hasClientWithEmail(email)) {
+    if (!clientController.hasClientWithEmail(email)) {
       resp.setStatus(HttpServletResponse.SC_CONFLICT);
       resp.setContentType("application/json");
       resp.getWriter().write("{\"error\": \"No user with such email\"}");
       resp.getWriter().close();
       return;
-    } else if (!DBClientController.checkPassword(email, password)) {
+    } else if (!clientController.checkPassword(email, password)) {
       resp.setStatus(HttpServletResponse.SC_CONFLICT);
       resp.setContentType("application/json");
       resp.getWriter().write("{\"error\": \"Wrong password\"}");

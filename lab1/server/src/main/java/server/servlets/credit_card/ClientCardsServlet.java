@@ -15,12 +15,12 @@ import org.mapstruct.factory.Mappers;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import server.JWTService;
-import server.db.DBAccountController;
-import server.db.DBCardController;
-import server.db.DBClientController;
 import server.db.classes.DBAccount;
 import server.db.classes.DBCard;
-import server.db.classes.DBClient;
+import server.db.classes.DBUser;
+import server.db.controllers.DBAccountController;
+import server.db.controllers.DBCardController;
+import server.db.controllers.user.DBClientController;
 import server.mapstruct.DBCardCardInfoMapper;
 // import server.mapstruct.DBCardCardInfoMapper;
 import server.servlets.dtos.CardAccountInfo;
@@ -31,8 +31,8 @@ public class ClientCardsServlet extends HttpServlet {
   @Override
   protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {        
     String email = (String) req.getAttribute("email");
-    DBClient client = DBClientController.getClientByEmail(email);
-    ArrayList<DBCard> cards = DBCardController.getClientCards(client.getId());
+    DBUser client = new DBClientController().getClientByEmail(email);
+    ArrayList<DBCard> cards = new DBCardController().getClientCards(client.getId());
     ArrayList<CardInfo> cardInfos = new ArrayList<>();
 
     for (DBCard card: cards) {

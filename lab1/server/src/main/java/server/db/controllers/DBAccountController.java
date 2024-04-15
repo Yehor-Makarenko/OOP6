@@ -1,4 +1,4 @@
-package server.db;
+package server.db.controllers;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -6,17 +6,11 @@ import java.sql.SQLException;
 
 import server.db.classes.DBAccount;
 
-public class DBAccountController {
-  private static DBController dbController = DBController.getInstance(); 
-
-  private DBAccountController() {
-
-  }
-
-  public static DBAccount getAccountByCardId(int cardId) {
+public class DBAccountController extends DBController {
+  public  DBAccount getAccountByCardId(int cardId) {
     DBAccount account = null;
     try {
-      PreparedStatement stmt = dbController.getConnection().prepareStatement("SELECT * FROM accounts WHERE card_id = ?");
+      PreparedStatement stmt = this.connection.prepareStatement("SELECT * FROM accounts WHERE card_id = ?");
       stmt.setInt(1, cardId);
       ResultSet res = stmt.executeQuery();
 
@@ -31,9 +25,9 @@ public class DBAccountController {
     return account;
   }
 
-  public static void setBalance(int accountID, int newBalance) {
+  public  void setBalance(int accountID, int newBalance) {
     try {
-      PreparedStatement stmt = dbController.getConnection().prepareStatement("UPDATE accounts SET balance = ? WHERE account_id = ?");
+      PreparedStatement stmt = this.connection.prepareStatement("UPDATE accounts SET balance = ? WHERE account_id = ?");
       stmt.setInt(1, newBalance);
       stmt.setInt(2, accountID);
       stmt.executeUpdate();      
@@ -43,9 +37,9 @@ public class DBAccountController {
     }
   }
 
-  public static void block(int accountID) {
+  public  void block(int accountID) {
     try {
-      PreparedStatement stmt = dbController.getConnection().prepareStatement("UPDATE accounts SET is_blocked = ? WHERE account_id = ?");
+      PreparedStatement stmt = this.connection.prepareStatement("UPDATE accounts SET is_blocked = ? WHERE account_id = ?");
       stmt.setBoolean(1, true);
       stmt.setInt(2, accountID);
       stmt.executeUpdate();      
@@ -55,9 +49,9 @@ public class DBAccountController {
     }
   }
 
-  public static void unblock(int accountID) {
+  public  void unblock(int accountID) {
     try {
-      PreparedStatement stmt = dbController.getConnection().prepareStatement("UPDATE accounts SET is_blocked = ? WHERE account_id = ?");
+      PreparedStatement stmt = this.connection.prepareStatement("UPDATE accounts SET is_blocked = ? WHERE account_id = ?");
       stmt.setBoolean(1, false);
       stmt.setInt(2, accountID);
       stmt.executeUpdate();      
