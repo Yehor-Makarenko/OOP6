@@ -9,7 +9,7 @@ import lombok.NoArgsConstructor;
 @Getter
 @AllArgsConstructor
 @NoArgsConstructor
-public class DBClient {
+public class DBUser {
   private int id;
   private String name;
   private String email;  

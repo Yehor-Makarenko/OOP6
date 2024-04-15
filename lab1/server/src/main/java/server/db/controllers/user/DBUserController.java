@@ -19,9 +19,8 @@ public abstract class DBUserController extends DBController {
   public  DBUser getClientByEmail(String email) { // Make getClientByEmail
     DBUser client = null;
     try {
-      PreparedStatement stmt = this.connection.prepareStatement("SELECT * FROM ? WHERE email = ?");
-      stmt.setString(1, this.tableName);
-      stmt.setString(2, email);
+      PreparedStatement stmt = this.connection.prepareStatement("SELECT * FROM " + this.tableName + " WHERE email = ?");      
+      stmt.setString(1, email);
       ResultSet res = stmt.executeQuery();
       if (res.next()) {
         client = new DBUser(res.getInt("client_id"), res.getString("name"), res.getString("email"));
@@ -37,11 +36,10 @@ public abstract class DBUserController extends DBController {
   public  void addClient(String name, String email, String password) {
     String hashedPassword = BCrypt.hashpw(password, BCrypt.gensalt());
     try {
-      PreparedStatement stmt = this.connection.prepareStatement("INSERT INTO ? (name, email, password) VALUES (?, ?, ?)");
-      stmt.setString(1, this.tableName);
-      stmt.setString(2, name);
-      stmt.setString(3, email);
-      stmt.setString(4, hashedPassword);
+      PreparedStatement stmt = this.connection.prepareStatement("INSERT INTO " + this.tableName + " (name, email, password) VALUES (?, ?, ?)");      
+      stmt.setString(1, name);
+      stmt.setString(2, email);
+      stmt.setString(3, hashedPassword);
       stmt.executeUpdate();
     } catch (SQLException e) {
       // TODO Auto-generated catch block
@@ -52,9 +50,8 @@ public abstract class DBUserController extends DBController {
   public  boolean hasClientWithEmail(String email) {
     int count = 0;
     try {
-      PreparedStatement stmt = this.connection.prepareStatement("SELECT COUNT(*) FROM ? WHERE email = ?");
-      stmt.setString(1, this.tableName);
-      stmt.setString(2, email);
+      PreparedStatement stmt = this.connection.prepareStatement("SELECT COUNT(*) FROM " + this.tableName + " WHERE email = ?");      
+      stmt.setString(1, email);
       ResultSet res = stmt.executeQuery();   
       res.next();   
       count = res.getInt(1);      
@@ -70,9 +67,8 @@ public abstract class DBUserController extends DBController {
     boolean isPasswordMatch = false;
     PreparedStatement stmt;
     try {
-      stmt = this.connection.prepareStatement("SELECT * FROM ? WHERE email = ?");
-      stmt.setString(1, this.tableName);
-      stmt.setString(2, email); 
+      stmt = this.connection.prepareStatement("SELECT * FROM " + this.tableName + " WHERE email = ?");      
+      stmt.setString(1, email); 
       ResultSet res = stmt.executeQuery();   
       res.next();
       String hashedPassword = res.getString("password");      

@@ -12,7 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 import com.auth0.jwt.exceptions.JWTVerificationException;
 
 import server.JWTService;
-import server.db.classes.DBClient;
+import server.db.classes.DBUser;
 import server.servlets.dtos.UserJWT;
 
 @WebFilter("/auth/*")
