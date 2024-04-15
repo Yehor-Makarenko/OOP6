@@ -23,7 +23,7 @@ public class ClientLoginServlet extends HttpServlet {
     UserJWT userJWT = new UserJWT(email, "CLIENT");
     DBClientController clientController = new DBClientController();
 
-    if (!clientController.hasClientWithEmail(email)) {
+    if (!clientController.hasUserWithEmail(email)) {
       resp.setStatus(HttpServletResponse.SC_CONFLICT);
       resp.setContentType("application/json");
       resp.getWriter().write("{\"error\": \"No user with such email\"}");

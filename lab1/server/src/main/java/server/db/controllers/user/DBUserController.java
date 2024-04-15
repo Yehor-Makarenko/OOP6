@@ -11,19 +11,21 @@ import server.db.controllers.DBController;
 
 public abstract class DBUserController extends DBController {
   private String tableName;
+  private String idColumnName;
 
-  public DBUserController(String tableName) {
+  public DBUserController(String tableName, String idColumnName) {
     this.tableName = tableName;
+    this.idColumnName = idColumnName;
   }
 
-  public  DBUser getClientByEmail(String email) { // Make getClientByEmail
+  public  DBUser getUserByEmail(String email) { // Make getClientByEmail
     DBUser client = null;
     try {
       PreparedStatement stmt = this.connection.prepareStatement("SELECT * FROM " + this.tableName + " WHERE email = ?");      
       stmt.setString(1, email);
       ResultSet res = stmt.executeQuery();
       if (res.next()) {
-        client = new DBUser(res.getInt("client_id"), res.getString("name"), res.getString("email"));
+        client = new DBUser(res.getInt(this.idColumnName), res.getString("name"), res.getString("email"));
       }
     } catch (SQLException e) {
       // TODO Auto-generated catch block
@@ -33,7 +35,7 @@ public abstract class DBUserController extends DBController {
     return client;
   }
 
-  public  void addClient(String name, String email, String password) {
+  public  void addUser(String name, String email, String password) {
     String hashedPassword = BCrypt.hashpw(password, BCrypt.gensalt());
     try {
       PreparedStatement stmt = this.connection.prepareStatement("INSERT INTO " + this.tableName + " (name, email, password) VALUES (?, ?, ?)");      
@@ -47,7 +49,7 @@ public abstract class DBUserController extends DBController {
     }
   }
 
-  public  boolean hasClientWithEmail(String email) {
+  public  boolean hasUserWithEmail(String email) {
     int count = 0;
     try {
       PreparedStatement stmt = this.connection.prepareStatement("SELECT COUNT(*) FROM " + this.tableName + " WHERE email = ?");      

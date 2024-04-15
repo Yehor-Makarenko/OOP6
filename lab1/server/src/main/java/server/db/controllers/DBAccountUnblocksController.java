@@ -5,7 +5,7 @@ import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
 public class DBAccountUnblocksController extends DBController {
-  public  void unblock(int accountID, int adminId) {
+  public void addUnblock(int accountID, int adminId) {
     Date currentDate = new Date(System.currentTimeMillis());
     try {
       PreparedStatement stmt = this.connection.prepareStatement("INSERT INTO account_blocks (account_id, admin_id, unblocking_date) VALUES (?, ?, ?)");

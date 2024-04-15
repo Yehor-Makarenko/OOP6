@@ -25,7 +25,7 @@ public class ClientRegistrationServlet extends HttpServlet {
     UserJWT userJWT = new UserJWT(email, "CLIENT");   
     DBClientController clientController = new DBClientController();
     
-    if (clientController.hasClientWithEmail(email)) {
+    if (clientController.hasUserWithEmail(email)) {
       resp.setStatus(HttpServletResponse.SC_CONFLICT);
       resp.setContentType("application/json");
       resp.getWriter().write("{\"error\": \"User already exists\"}");
@@ -33,7 +33,7 @@ public class ClientRegistrationServlet extends HttpServlet {
       return;
     }
 
-    clientController.addClient(username, email, password);
+    clientController.addUser(username, email, password);
     String token = JWTService.generateJWT(userJWT);   
 
     PrintWriter writer = resp.getWriter();

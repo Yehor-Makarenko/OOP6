@@ -31,7 +31,7 @@ public class ClientCardsServlet extends HttpServlet {
   @Override
   protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {        
     String email = (String) req.getAttribute("email");
-    DBUser client = new DBClientController().getClientByEmail(email);
+    DBUser client = new DBClientController().getUserByEmail(email);
     ArrayList<DBCard> cards = new DBCardController().getClientCards(client.getId());
     ArrayList<CardInfo> cardInfos = new ArrayList<>();
 

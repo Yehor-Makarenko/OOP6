@@ -10,9 +10,11 @@ import javax.servlet.http.HttpServletResponse;
 
 import server.db.classes.DBAccount;
 import server.db.classes.DBCard;
+import server.db.classes.DBUser;
 import server.db.controllers.DBAccountBlocksController;
 import server.db.controllers.DBAccountController;
 import server.db.controllers.DBCardController;
+import server.db.controllers.user.DBAdminController;
 
 @WebServlet("/auth/account/block")
 public class AccountBlockServlet extends HttpServlet {
@@ -22,11 +24,13 @@ public class AccountBlockServlet extends HttpServlet {
     String blockReason = req.getParameter("reason");
     DBCard card = new DBCardController().getCardByNumber(cardNumber);
     DBAccount dbAccount = new DBAccountController().getAccountByCardId(card.getId());
-    String role = (String) req.getAttribute("role");
+    String role = (String) req.getAttribute("role");    
     if (role.equals("ADMIN")) {
-      new DBAccountBlocksController().block(dbAccount.getId(), cardNumber, blockReason); // Add admin id
+      String email = (String) req.getAttribute("email");
+      DBUser admin = new DBAdminController().getUserByEmail(email);
+      new DBAccountBlocksController().addBlock(dbAccount.getId(), admin.getId(), blockReason);
     } else {
-      new DBAccountBlocksController().block(dbAccount.getId(), blockReason);
+      new DBAccountBlocksController().addBlock(dbAccount.getId(), blockReason);
     }
     new DBAccountController().block(dbAccount.getId());
   }
