@@ -31,12 +31,12 @@ public class ClientCardsServlet extends HttpServlet {
   @Override
   protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {        
     String email = (String) req.getAttribute("email");
-    DBUser client = new DBClientController().getUserByEmail(email);
-    ArrayList<DBCard> cards = new DBCardController().getClientCards(client.getId());
+    DBUser client = DBClientController.getInstance().getUserByEmail(email);
+    ArrayList<DBCard> cards = DBCardController.getInstance().getClientCards(client.getId());
     ArrayList<CardInfo> cardInfos = new ArrayList<>();
 
-    for (DBCard card: cards) {
-      DBCardCardInfoMapper mapper = Mappers.getMapper(DBCardCardInfoMapper.class);
+    DBCardCardInfoMapper mapper = Mappers.getMapper(DBCardCardInfoMapper.class);
+    for (DBCard card: cards) {      
       CardInfo cardInfo = mapper.dbCardToCardInfo(card);
       cardInfos.add(cardInfo);
     }

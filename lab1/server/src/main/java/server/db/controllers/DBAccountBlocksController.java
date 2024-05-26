@@ -5,7 +5,21 @@ import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
+import server.db.controllers.payments.DBPaymentController;
+
 public class DBAccountBlocksController extends DBController {  
+  private static DBAccountBlocksController instance = null;  
+
+  private DBAccountBlocksController() {}
+
+  public static DBAccountBlocksController getInstance() {
+    if (instance == null) {
+      instance = new DBAccountBlocksController();
+    }
+
+    return instance;
+  }
+
   public void addBlock(int accountID, int adminId, String reason) {
     Date currentDate = new Date(System.currentTimeMillis());
     try {

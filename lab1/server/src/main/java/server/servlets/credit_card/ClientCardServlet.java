@@ -21,7 +21,7 @@ public class ClientCardServlet extends HttpServlet {
   @Override
   protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
     int cardNumer = Integer.parseInt(req.getParameter("number"));
-    DBCard dbCard = new DBCardController().getCardByNumber(cardNumer);
+    DBCard dbCard = DBCardController.getInstance().getCardByNumber(cardNumer);
 
     if (dbCard == null) {
       resp.setStatus(HttpServletResponse.SC_CONFLICT);
@@ -31,7 +31,7 @@ public class ClientCardServlet extends HttpServlet {
       return;
     }
 
-    DBAccount dbAccount = new DBAccountController().getAccountByCardId(dbCard.getId());
+    DBAccount dbAccount = DBAccountController.getInstance().getAccountByCardId(dbCard.getId());
     CardAccountInfo cardAccountInfo = new CardAccountInfo(dbCard.getNumber(), dbCard.getExpirationDate(), 
       dbCard.getCvv(), dbAccount.getBalance(), dbAccount.isBlocked());
 

@@ -21,7 +21,7 @@ public class AdminLoginServlet extends HttpServlet {
     String email = req.getParameter("email");
     String password = req.getParameter("password");  
     UserJWT userJWT = new UserJWT(email, "ADMIN");
-    DBAdminController adminController = new DBAdminController();
+    DBAdminController adminController = DBAdminController.getInstance();
 
     if (!adminController.hasUserWithEmail(email)) {
       resp.setStatus(HttpServletResponse.SC_CONFLICT);

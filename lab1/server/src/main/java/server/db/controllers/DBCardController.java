@@ -11,6 +11,18 @@ import javax.naming.spi.DirStateFactory.Result;
 import server.db.classes.DBCard;
 
 public class DBCardController extends DBController {
+  private static DBCardController instance = null;  
+
+  private DBCardController() {}
+
+  public static DBCardController getInstance() {
+    if (instance == null) {
+      instance = new DBCardController();
+    }
+
+    return instance;
+  }
+
   public  ArrayList<DBCard> getClientCards(int userId) {
     ArrayList<DBCard> cards = new ArrayList<>();
     try {

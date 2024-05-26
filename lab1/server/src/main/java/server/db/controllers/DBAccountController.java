@@ -7,6 +7,18 @@ import java.sql.SQLException;
 import server.db.classes.DBAccount;
 
 public class DBAccountController extends DBController {
+  private static DBAccountController instance = null;  
+
+  private DBAccountController() {}
+
+  public static DBAccountController getInstance() {
+    if (instance == null) {
+      instance = new DBAccountController();
+    }
+
+    return instance;
+  }
+
   public  DBAccount getAccountByCardId(int cardId) {
     DBAccount account = null;
     try {

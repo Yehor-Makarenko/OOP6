@@ -22,16 +22,16 @@ public class AccountBlockServlet extends HttpServlet {
   protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
     int cardNumber = Integer.parseInt(req.getParameter("card_number"));
     String blockReason = req.getParameter("reason");
-    DBCard card = new DBCardController().getCardByNumber(cardNumber);
-    DBAccount dbAccount = new DBAccountController().getAccountByCardId(card.getId());
+    DBCard card = DBCardController.getInstance().getCardByNumber(cardNumber);
+    DBAccount dbAccount = DBAccountController.getInstance().getAccountByCardId(card.getId());
     String role = (String) req.getAttribute("role");    
     if (role.equals("ADMIN")) {
       String email = (String) req.getAttribute("email");
-      DBUser admin = new DBAdminController().getUserByEmail(email);
-      new DBAccountBlocksController().addBlock(dbAccount.getId(), admin.getId(), blockReason);
+      DBUser admin = DBAdminController.getInstance().getUserByEmail(email);
+      DBAccountBlocksController.getInstance().addBlock(dbAccount.getId(), admin.getId(), blockReason);
     } else {
-      new DBAccountBlocksController().addBlock(dbAccount.getId(), blockReason);
+      DBAccountBlocksController.getInstance().addBlock(dbAccount.getId(), blockReason);
     }
-    new DBAccountController().block(dbAccount.getId());
+    DBAccountController.getInstance().block(dbAccount.getId());
   }
 }

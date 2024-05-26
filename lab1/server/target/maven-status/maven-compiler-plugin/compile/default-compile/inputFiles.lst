@@ -1,4 +1,5 @@
 c:\Users\makye\OneDrive\Рабочий стол\OOP6\lab1\server\src\main\java\server\servlets\account\AccountBlockServlet.java
+c:\Users\makye\OneDrive\Рабочий стол\OOP6\lab1\server\src\main\java\server\mapstruct\DBPaymentPaymentInfoMapper.java
 c:\Users\makye\OneDrive\Рабочий стол\OOP6\lab1\server\src\main\java\server\servlets\dtos\CardInfo.java
 c:\Users\makye\OneDrive\Рабочий стол\OOP6\lab1\server\src\main\java\server\filters\AuthorizeFilter.java
 c:\Users\makye\OneDrive\Рабочий стол\OOP6\lab1\server\src\main\java\server\db\classes\DBCard.java
@@ -11,6 +12,7 @@ c:\Users\makye\OneDrive\Рабочий стол\OOP6\lab1\server\src\main\java\s
 c:\Users\makye\OneDrive\Рабочий стол\OOP6\lab1\server\src\main\java\server\servlets\dtos\CardAccountInfo.java
 c:\Users\makye\OneDrive\Рабочий стол\OOP6\lab1\server\src\main\java\server\CORSFilter.java
 c:\Users\makye\OneDrive\Рабочий стол\OOP6\lab1\server\src\main\java\server\db\controllers\user\DBUserController.java
+c:\Users\makye\OneDrive\Рабочий стол\OOP6\lab1\server\src\main\java\server\servlets\payment\PaymentsServlet.java
 c:\Users\makye\OneDrive\Рабочий стол\OOP6\lab1\server\src\main\java\server\servlets\admin\AdminRegistrationServlet.java
 c:\Users\makye\OneDrive\Рабочий стол\OOP6\lab1\server\src\main\java\server\db\classes\DBAccount.java
 c:\Users\makye\OneDrive\Рабочий стол\OOP6\lab1\server\src\main\java\server\servlets\account\AccountUnblockServlet.java
@@ -26,7 +28,9 @@ c:\Users\makye\OneDrive\Рабочий стол\OOP6\lab1\server\src\main\java\s
 c:\Users\makye\OneDrive\Рабочий стол\OOP6\lab1\server\src\main\java\server\servlets\client\ClientLoginServlet.java
 c:\Users\makye\OneDrive\Рабочий стол\OOP6\lab1\server\src\main\java\server\servlets\client\ClientRegistrationServlet.java
 c:\Users\makye\OneDrive\Рабочий стол\OOP6\lab1\server\src\main\java\server\db\classes\DBUser.java
-c:\Users\makye\OneDrive\Рабочий стол\OOP6\lab1\server\src\main\java\server\db\controllers\DBPaymentController.java
+c:\Users\makye\OneDrive\Рабочий стол\OOP6\lab1\server\src\main\java\server\db\controllers\payments\DBPaymentController.java
+c:\Users\makye\OneDrive\Рабочий стол\OOP6\lab1\server\src\main\java\server\db\classes\DBPayment.java
+c:\Users\makye\OneDrive\Рабочий стол\OOP6\lab1\server\src\main\java\server\servlets\dtos\PaymentInfo.java
 c:\Users\makye\OneDrive\Рабочий стол\OOP6\lab1\server\src\main\java\server\SSExample.java
 c:\Users\makye\OneDrive\Рабочий стол\OOP6\lab1\server\src\main\java\server\db\controllers\DBController.java
 c:\Users\makye\OneDrive\Рабочий стол\OOP6\lab1\server\src\main\java\server\servlets\credit_card\ClientCardServlet.java
