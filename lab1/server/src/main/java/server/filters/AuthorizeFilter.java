@@ -1,6 +1,7 @@
 package server.filters;
 
 import java.io.IOException;
+import java.util.Enumeration;
 
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
@@ -20,7 +21,12 @@ public class AuthorizeFilter extends HttpFilter {
   @Override
   protected void doFilter(HttpServletRequest req, HttpServletResponse res, FilterChain chain)
       throws IOException, ServletException {    
-    try {
+    try { 
+      if (req.getMethod().equalsIgnoreCase("OPTIONS")) {
+        chain.doFilter(req, res);
+        return;
+      }
+
       String token = req.getHeader("Authorization").split(" ")[1];
       UserJWT user = JWTService.verifyToken(token);
       req.setAttribute("role", user.getRole());      
@@ -30,6 +36,7 @@ public class AuthorizeFilter extends HttpFilter {
       res.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
       res.getWriter().println("Error, unauthorized!");
       res.getWriter().close();      
+
     }    
   }
 }

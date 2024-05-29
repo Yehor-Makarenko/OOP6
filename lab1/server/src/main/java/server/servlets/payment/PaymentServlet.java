@@ -31,6 +31,13 @@ public class PaymentServlet extends HttpServlet {
       resp.getWriter().close();
       return;
     }
+    if (account.isBlocked()) {
+      resp.setStatus(HttpServletResponse.SC_CONFLICT);
+      resp.setContentType("application/json");
+      resp.getWriter().write("{\"error\": \"Card is blocked\"}");
+      resp.getWriter().close();
+      return;
+    }
 
     DBPaymentController.getInstance().addPayment(account.getId(), amount, description);;
     accountController.setBalance(account.getId(), account.getBalance() - amount);

@@ -12,9 +12,9 @@ public class CORSFilter implements Filter {
     @Override
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
         HttpServletResponse httpResponse = (HttpServletResponse) response;
-        HttpServletRequest httpRequest = (HttpServletRequest) request;
+        HttpServletRequest httpRequest = (HttpServletRequest) request;        
                 
-        // if (!httpRequest.getHeader("Origin").equals("http://127.0.0.1:5500")) {
+        // if (!httpRequest.getHeader("Origin").equals("http://127.0.0.1:550056")) {
         //     chain.doFilter(request, response);
         //     return;
         // }
@@ -26,8 +26,11 @@ public class CORSFilter implements Filter {
         httpResponse.setHeader("Access-Control-Allow-Credentials", "true");
         httpResponse.setHeader("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept, Authorization");
         httpResponse.setHeader("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS, HEAD");
-        
-        chain.doFilter(request, response);
+        if (httpRequest.getMethod().equalsIgnoreCase("OPTIONS")) {
+            httpResponse.setStatus(HttpServletResponse.SC_OK);            
+        } else {
+            chain.doFilter(request, response);
+        }        
     }
 
     @Override

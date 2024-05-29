@@ -9,6 +9,9 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.node.ObjectNode;
+
 import server.JWTService;
 import server.db.controllers.user.DBAdminController;
 import server.db.controllers.user.DBClientController;
@@ -33,10 +36,13 @@ public class AdminRegistrationServlet extends HttpServlet {
     }
 
     adminController.addUser(username, email, password);
-    String token = JWTService.generateJWT(userJWT);   
+    String token = JWTService.generateJWT(userJWT); //make jwt user
 
-    PrintWriter writer = resp.getWriter();
-    writer.println(token);    
-    writer.close();
+    ObjectMapper mapper = new ObjectMapper();
+    ObjectNode jsonObject = mapper.createObjectNode();
+    jsonObject.put("token", token);    
+    
+    resp.setContentType("application/json");
+    resp.getWriter().write(mapper.writeValueAsString(jsonObject));   
   }
 }

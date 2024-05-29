@@ -22,10 +22,13 @@ public class AccountBlockServlet extends HttpServlet {
   protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
     int cardNumber = Integer.parseInt(req.getParameter("card_number"));
     String blockReason = req.getParameter("reason");
-    DBCard card = DBCardController.getInstance().getCardByNumber(cardNumber);
+    DBCard card = DBCardController.getInstance().getCardByNumber(cardNumber);    
     DBAccount dbAccount = DBAccountController.getInstance().getAccountByCardId(card.getId());
+    if (dbAccount.isBlocked()) {
+      return;
+    }
     String role = (String) req.getAttribute("role");    
-    if (role.equals("ADMIN")) {
+    if (role.equalsIgnoreCase("ADMIN")) {
       String email = (String) req.getAttribute("email");
       DBUser admin = DBAdminController.getInstance().getUserByEmail(email);
       DBAccountBlocksController.getInstance().addBlock(dbAccount.getId(), admin.getId(), blockReason);

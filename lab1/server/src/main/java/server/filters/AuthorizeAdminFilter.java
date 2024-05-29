@@ -17,11 +17,15 @@ public class AuthorizeAdminFilter extends HttpFilter {
   @Override
   protected void doFilter(HttpServletRequest req, HttpServletResponse res, FilterChain chain)
       throws IOException, ServletException {      
-        try {
+      try {
+        if (req.getMethod().equalsIgnoreCase("OPTIONS")) {
+          chain.doFilter(req, res);
+          return;
+        }
         String token = req.getHeader("Authorization").split(" ")[1];
         UserJWT user = JWTService.verifyToken(token);
 
-        if (!user.getRole().equals("admin")) {
+        if (!user.getRole().equalsIgnoreCase("admin")) {
           throw new Exception();
         }
 

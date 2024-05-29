@@ -1,0 +1,32 @@
+.payment-form-container {
+  padding: 2rem;
+  background: linear-gradient(to right, #ff9966, #ff5e62);
+  min-height: 100vh;
+  color: #fff;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.payment-form-container h2 {
+  margin-bottom: 2rem;
+  color: #fff;
+}
+
+.payment-form-container .form-group {
+  margin-bottom: 1rem;
+}
+
+.payment-form-container .form-control {
+  border-radius: 0.25rem;
+}
+
+.payment-form-container .btn-primary {
+  background-color: #333;
+  border: none;
+}
+
+.payment-form-container .alert {
+  margin-bottom: 1rem;
+}

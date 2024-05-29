@@ -25,7 +25,10 @@ public class AccountUnblockServlet extends HttpServlet {
     int cardNumber = Integer.parseInt(req.getParameter("card_number"));    
     DBCard card = DBCardController.getInstance().getCardByNumber(cardNumber);
     DBAccountController accountController = DBAccountController.getInstance();
-    DBAccount dbAccount = accountController.getAccountByCardId(card.getId());    
+    DBAccount dbAccount = accountController.getAccountByCardId(card.getId());   
+    if (!dbAccount.isBlocked()) {
+      return;
+    } 
     accountController.unblock(dbAccount.getId());
     DBAccountUnblocksController.getInstance().addUnblock(dbAccount.getId(), admin.getId()); // Add admin id
   }
