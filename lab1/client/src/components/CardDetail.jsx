@@ -108,7 +108,7 @@ const CardDetail = () => {
       <div className="card-detail">
         <h2 className="text-center">Card Details</h2>
         <p><strong>Card Number:</strong> {cardDetails.cardNumber}</p>
-        <p><strong>Expiration Date:</strong> {cardDetails.expirationDate}</p>
+        <p><strong>Expiration Date:</strong> {new Date(cardDetails.expirationDate).toLocaleDateString()}</p>
         <p><strong>CVV:</strong> {cardDetails.cvv}</p>
         <p><strong>Balance:</strong> ${cardDetails.balance}</p>
         <p><strong>Is Blocked:</strong> {cardDetails.blocked ? 'Yes' : 'No'}</p>
@@ -119,16 +119,16 @@ const CardDetail = () => {
         )}
       </div>
 
-      <div className="payments-detail">
+      <div className="payments-detail mt-5">
         <h2 className="text-center">Payments</h2>
         {payments.length === 0 ? (
           <p>No payments found.</p>
         ) : (
           <ul className="list-group">
             {payments.map((payment, index) => (
-              <li className="list-group-item" key={index}>
+              <li className="list-group-item mt-1" key={index}>
                 <p><strong>Amount:</strong> ${payment.amount}</p>
-                <p><strong>Date:</strong> {payment.paymentDate}</p>
+                <p><strong>Date:</strong> {new Date(payment.paymentDate).toLocaleDateString()}</p>
                 <p><strong>Description:</strong> {payment.description}</p>
               </li>
             ))}

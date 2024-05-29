@@ -40,10 +40,10 @@ const CreditCards = () => {
       <h2 className="text-center">My Credit Cards</h2>
       <div className="cards-list">
         {cards.map((card, index) => (
-          <div className="card" key={index} onClick={() => handleCardClick(card.number)}>
+          <div className="card mt-3" key={index} onClick={() => handleCardClick(card.number)}>
             <div className="card-body">
               <h5 className="card-title">Card Number: {card.number}</h5>
-              <p className="card-text">Expiration Date: {card.expirationDate}</p>
+              <p className="card-text">Expiration Date: {new Date(card.expirationDate).toLocaleDateString()}</p>
               <p className="card-text">CVV: {card.cvv}</p>
             </div>
           </div>

@@ -45,7 +45,7 @@ const RegistrationForm = () => {
 
   return (
     <div className="registration-container">
-      <h2 className="text-center">Registration</h2>
+      <h2 className="text-center px-3">Registration</h2>
       <form>
         <div className="form-group">
           <label>Username</label>

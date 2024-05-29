@@ -21,7 +21,7 @@ const Navbar = () => {
   };
 
   return (
-    <nav className="navbar navbar-expand-lg navbar-light bg-light">
+    <nav className="navbar navbar-expand-lg navbar-light bg-light px-3">
       <NavLink className="navbar-brand" to="/">Payment System</NavLink>
       <div className="navbar-collapse" id="navbarNav">
         <ul className="navbar-nav ml-auto">
@@ -54,7 +54,7 @@ const Navbar = () => {
           ) : (
             <>
               <li className="nav-item">
-                <NavLink className="nav-link" to="/register">Register</NavLink>
+                <NavLink className="nav-link" to="/registration">Register</NavLink>
               </li>
               <li className="nav-item">
                 <NavLink className="nav-link" to="/login">Login</NavLink>

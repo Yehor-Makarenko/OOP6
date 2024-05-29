@@ -17,7 +17,7 @@ function App() {
       <BrowserRouter>
         <Navbar/>
         <Routes>    
-          <Route path="/register" element={<RegistrationForm/>} />
+          <Route path="/registration" element={<RegistrationForm/>} />
           <Route path="/login" element={<LoginForm/>} />
           <Route path="/cards" element={<CreditCards/>} />
           <Route path='/card/:number' element={<CardDetail/>} />
