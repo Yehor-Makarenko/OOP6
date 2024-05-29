@@ -1,0 +1,193 @@
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                   http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.3.xsd">
+
+    <changeSet id="create_table_clients" author="author">
+        <createTable tableName="clients">
+            <column name="client_id" type="bigint" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="name" type="varchar(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="email" type="varchar(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="password" type="varchar(255)">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+
+    <changeSet id="create_table_admins" author="author">
+        <createTable tableName="admins">
+            <column name="admin_id" type="bigint" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="name" type="varchar(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="email" type="varchar(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="password" type="varchar(255)">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+
+    <changeSet id="create_table_credit_cards" author="author">
+        <createTable tableName="credit_cards">
+            <column name="card_id" type="bigint" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="client_id" type="bigint">
+                <constraints nullable="false"/>
+            </column>
+            <column name="card_number" type="varchar(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="expiration_date" type="varchar(10)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="cvv" type="varchar(3)">
+                <constraints nullable="false"/>
+            </column>            
+        </createTable>
+    </changeSet>
+
+    <changeSet id="create_table_accounts" author="author">
+        <createTable tableName="accounts">
+            <column name="account_id" type="bigint" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="card_id" type="bigint">
+                <constraints nullable="false"/>
+            </column>
+            <column name="balance" type="double">
+                <constraints nullable="false"/>
+            </column>
+            <column name="is_blocked" type="boolean">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+
+    <changeSet id="create_table_payments" author="author">
+        <createTable tableName="payments">
+            <column name="payment_id" type="bigint" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="account_id" type="bigint">
+                <constraints nullable="false"/>
+            </column>
+            <column name="amount" type="double">
+                <constraints nullable="false"/>
+            </column>
+            <column name="payment_date" type="timestamp">
+                <constraints nullable="false"/>
+            </column>
+            <column name="description" type="varchar(255)">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+
+    <changeSet id="create_table_account_blocks" author="author">
+        <createTable tableName="account_blocks">
+            <column name="block_id" type="bigint" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="account_id" type="bigint">
+                <constraints nullable="false"/>
+            </column>
+            <column name="admin_id" type="bigint">
+                <constraints nullable="true"/>
+            </column>
+            <column name="blocking_date" type="timestamp">
+                <constraints nullable="false"/>
+            </column>
+            <column name="reason" type="varchar(255)">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+
+    <changeSet id="create_table_account_unblocks" author="author">
+        <createTable tableName="account_unblocks">
+            <column name="unblock_id" type="bigint" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="account_id" type="bigint">
+                <constraints nullable="false"/>
+            </column>
+            <column name="admin_id" type="bigint">
+                <constraints nullable="false"/>
+            </column>
+            <column name="unblocking_date" type="timestamp">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet id="add_foreign_key_to_credit_cards" author="author">
+    <addForeignKeyConstraint baseTableName="credit_cards"
+                             baseColumnNames="client_id"
+                             constraintName="fk_credit_cards_client_id"
+                             referencedTableName="clients"
+                             referencedColumnNames="client_id"
+                             onDelete="CASCADE"/>
+    </changeSet>
+
+    <changeSet id="add_foreign_key_to_accounts" author="author">
+        <addForeignKeyConstraint baseTableName="accounts"
+                                baseColumnNames="card_id"
+                                constraintName="fk_accounts_card_id"
+                                referencedTableName="credit_cards"
+                                referencedColumnNames="card_id"
+                                onDelete="CASCADE"/>
+    </changeSet>
+
+    <changeSet id="add_foreign_key_to_payments" author="author">
+        <addForeignKeyConstraint baseTableName="payments"
+                                baseColumnNames="account_id"
+                                constraintName="fk_payments_account_id"
+                                referencedTableName="accounts"
+                                referencedColumnNames="account_id"
+                                onDelete="CASCADE"/>
+    </changeSet>
+
+    <changeSet id="add_foreign_key_to_account_blocks" author="author">
+        <addForeignKeyConstraint baseTableName="account_blocks"
+                                baseColumnNames="account_id"
+                                constraintName="fk_account_blocks_account_id"
+                                referencedTableName="accounts"
+                                referencedColumnNames="account_id"
+                                onDelete="CASCADE"/>
+
+        <addForeignKeyConstraint baseTableName="account_blocks"
+                                baseColumnNames="admin_id"
+                                constraintName="fk_account_blocks_admin_id"
+                                referencedTableName="admins"
+                                referencedColumnNames="admin_id"
+                                onDelete="CASCADE"/>
+    </changeSet>
+
+    <changeSet id="add_foreign_key_to_account_unblocks" author="author">
+        <addForeignKeyConstraint baseTableName="account_unblocks"
+                                baseColumnNames="account_id"
+                                constraintName="fk_account_unblocks_account_id"
+                                referencedTableName="accounts"
+                                referencedColumnNames="account_id"
+                                onDelete="CASCADE"/>
+
+        <addForeignKeyConstraint baseTableName="account_unblocks"
+                                baseColumnNames="admin_id"
+                                constraintName="fk_account_unblocks_admin_id"
+                                referencedTableName="admins"
+                                referencedColumnNames="admin_id"
+                                onDelete="CASCADE"/>
+    </changeSet>
+
+
+</databaseChangeLog>
