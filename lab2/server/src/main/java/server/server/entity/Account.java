@@ -8,7 +8,11 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
+import lombok.Getter;
+import lombok.Setter;
 
+@Getter
+@Setter
 @Entity
 @Table(name = "accounts")
 public class Account {
@@ -25,7 +29,7 @@ public class Account {
     private double balance;
     
     @Column(name = "is_blocked")
-    private boolean blocked;
+    private boolean isBlocked;
 
     // Геттеры и сеттеры
 }
